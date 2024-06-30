@@ -1,0 +1,56 @@
+﻿@model eventia_database.Models.Users
+
+<main aria-labelledby="title">
+    <div class="container container-login">
+        <div class="login-form">
+            <div class="image-section">
+                <img src="@Url.Content("https://freestockfootagearchive.com/wp-content/uploads/2021/02/Psychedelic-Light-Overlay-Loop-Purple-Dream-Free-Download.jpeg")" alt="Hero Image" class="img-fluid">
+            </div>
+            <div class="form-section">
+                <h2>Register</h2>
+                @using (Html.BeginForm("Register", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div>
+                        <label for="username">USERNAME</label>
+                        @Html.TextBoxFor(model => model.UserName, new { id = "username", title = "Username", required = "required" })
+                        @Html.ValidationMessageFor(model => model.UserName)
+                    </div>
+
+                    <div>
+                        <label for="email">EMAIL</label>
+                        @Html.TextBoxFor(model => model.Mail, new { id = "email", title = "Email", required = "required" })
+                        @Html.ValidationMessageFor(model => model.Mail)
+                    </div>
+
+                    <div>
+                        <label for="password">PASSWORD</label>
+                        @Html.PasswordFor(model => model.Password, new { id = "password", title = "Password", required = "required" })
+                        @Html.ValidationMessageFor(model => model.Password)
+                    </div>
+
+                    <div>
+                        <label for="confirmPassword">CONFIRM PASSWORD</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" title="Confirm Password" required />
+                    </div>
+
+                    <div>
+                        <label for="profilePicture">PROFILE PHOTO</label>
+                        <input type="file" id="profilePicture" name="profilePicture" title="Profile Picture" accept="image/*" />
+                    </div>
+
+                    <div>
+                        <input type="submit" value="Register" />
+                    </div>
+
+                    <div class="form-links">
+                        @Html.ActionLink("Already a member? Sign In Here!", "Login", "Home", new { area = "" }, new { @class = "nav-link" })
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</main>
+
+

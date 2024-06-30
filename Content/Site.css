@@ -1,0 +1,691 @@
+﻿/* Font */
+
+@font-face {
+    font-family: 'theseasons';
+    src: url('@Url.Content("~/Content/fonts/Fontspring-DEMO-theseasons-bd.otf")') format('opentype'), url('@Url.Content("~/Content/fonts/Fontspring-DEMO-theseasons-bdit.otf")') format('opentype'), url('@Url.Content("~/Content/fonts/Fontspring-DEMO-theseasons-it.otf")') format('opentype'), url('@Url.Content("~/Content/fonts/Fontspring-DEMO-theseasons-lt.otf")') format('opentype'), url('@Url.Content("~/Content/fonts/Fontspring-DEMO-theseasons-ltit.otf")') format('opentype'), url('@Url.Content("~/Content/fonts/Fontspring-DEMO-theseasons-reg.otf")') format('opentype');
+}
+
+/* Tüm body için font ayarı */
+body {
+    font-family: Poppins, sans-serif;
+    background: rgb(238,200,250);
+    background: radial-gradient(circle, rgba(238,200,250,0.6000525210084033) 0%, rgba(233,208,242,0) 100%);
+}
+
+/* Diğer stillendirmeler buraya gelecek */
+
+
+/* Navbar */
+.navbar {
+    background-color: transparent;
+}
+
+/* Navbar linkleri */
+.nav-link {
+    color: #b200ff;
+    margin-right: 15px;
+}
+
+    /* Navbar link butonları */
+    .nav-link.btn {
+        border: 1px solid white;
+        padding: 5px 10px;
+    }
+    .nav-link:hover {
+        transform: translateY(-10px);
+        transition: all ease 0.3s;
+    }
+.login-btn {
+    border-radius: 20px;
+    width: 100px; /* Kenarları yuvarlatılmış */
+    border: 2px solid #b200ff; /* Mor kenar */
+    display: inline-block; /* Yazının ortalanması için */
+    text-align: center;
+    border-color: rgb(239,200,250);
+    border-color: radial-gradient(circle, rgba(239,200,250,0.9081757703081232) 0%, rgba(120,104,245,1) 100%);
+}
+
+    .login-btn a {
+        color: #b200ff; /* Metin rengi */
+        display: inline-block; /* Yazının ortalanması için */
+        text-align: center;
+    }
+
+ 
+/* Hero bölümü */
+.hero {
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+    .hero img {
+        width: 150%;
+        height: 75%;
+        border-radius: 30px;
+        opacity: 0.9;
+    }
+
+    .hero .search-bar {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        border-radius:20px;
+    }
+
+        .hero .search-bar h1 {
+            font-size: 2.5rem;
+        }
+
+        .hero .search-bar p {
+            margin-top: 100px;
+            font-size: 1.2rem;
+        }
+
+.search-input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 15px;
+    opacity:0.7;
+    border-style:none;
+}
+
+.filter-form {
+    margin-top: 10px;
+    border-radius: 15px;
+ 
+    border-style: none;
+}
+
+    .filter-form .form-inline {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .filter-form select {
+        padding: 5px;
+        border-radius: 15px;
+        opacity: 0.7;
+        border-style: none;
+    }
+
+    .filter-form .btn {
+        background-color:mediumpurple; /* istediğiniz rengin hex veya rgb değerini buraya yazın */
+        color: white; /* Yazı rengi */
+        border-radius: 15px;
+        border-color: transparent;
+        border-width: 1px;
+        width: 50%;
+    }
+
+/* Event ve Blog */
+.events,
+.review {
+    margin-top: 30px;
+}
+.event-cards-wrapper {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+    .carousel-control.prev {
+        left: 10px;
+    }
+
+    .carousel-control.next {
+        right: 10px;
+    }
+
+.event-cards {
+    display: flex;
+    flex-wrap: nowrap;
+    transition: transform 0.3s ease-in-out;
+}
+
+.event-card {
+    width: 25%; /* Adjust based on the number of visible cards */
+    flex: 0 0 auto;
+    background: rgb(237, 241, 147);
+    background: radial-gradient(circle, rgba(237, 241, 147, 0.6000525210084033) 0%, rgba(233, 208, 242, 0.9866071428571429) 100%);
+    margin: 0 10px; /* Adjust spacing between cards */
+    border-radius: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+}
+
+    .event-card img {
+        width: 100%;
+        height: 200px; /* Resimlerin sabit yüksekliği */
+        object-fit: cover; /* Resimleri keserek sabit boyuta uydurur */
+        border-bottom-left-radius: 30px;
+        border-bottom-right-radius: 30px;
+    }
+
+    .event-card button {
+        background-color: transparent;
+        color: #b200ff;
+        border-radius: 20px;
+        border-color: #b200ff5e;
+        border-width: 1px;
+        width: 50%;
+    }
+
+        .event-card button:hover {
+            background-color: #b200ff;
+            color: white;
+        }
+
+
+.btn-add-event {
+    background-color: transparent;
+    color: #b200ff;
+    border-radius: 20px;
+    border: 1px solid #b200ff5e; /* kenarlık rengi ve kalınlığı */
+    padding: 10px 20px; /* iç boşluk */
+    font-size: 16px; /* yazı boyutu */
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s; /* geçiş efekti */
+    width: 200px; /* buton genişliği */
+}
+
+    .btn-add-event:hover {
+        background-color: #b200ff; /* üzerine gelindiğinde arka plan rengi */
+        color: white; /* üzerine gelindiğinde yazı rengi */
+    }
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+.modal-event-img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.btn-custom {
+    
+    padding: 15px 20px;
+    color: #b200ff;
+    border-radius: 20px;
+    border-width: 1px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 20px;
+    background-color: transparent;
+    border-color: #b200ff5e;
+   
+}
+
+    .btn-custom:hover {
+        background-color: #b200ff;
+        color: white;
+    }
+
+hr {
+    border: 1px solid #ddd;
+    margin: 20px 0;
+}
+#joinForm label {
+    display: block;
+    margin: 15px 0 5px;
+}
+
+#joinForm input, #joinForm select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form input[type="checkbox"] {
+    transform: scale(0.8); /* Checkbox boyutunu küçült */
+    margin-right: 5px;
+}
+
+.gender-checkboxes {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Checkboxlar arasındaki boşluk */
+}
+
+    .gender-checkboxes label {
+        margin: 0;
+    }
+.event-info {
+    padding: 15px;
+}
+/*review*/
+.review {
+    margin-top: 30px;
+}
+
+.review-form {
+    margin-bottom: 20px;
+}
+
+    .review-form input,
+    .review-form textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+
+    .review-form button {
+        background-color: transparent;
+        color: #b200ff;
+        border-radius: 20px;
+        border: 1px solid #b200ff5e;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+    .review-form img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 10px;
+        border-style:none;
+    }
+
+        .review-form button:hover {
+            background-color: #b200ff;
+            color: white;
+        }
+.rating {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+    .rating input[type="radio"] {
+        display: none;
+    }
+
+    .rating label {
+        cursor: pointer;
+        font-size: 24px;
+        color: #ccc;
+    }
+
+    .rating input[type="radio"]:checked ~ label {
+        color: #ffd700;
+    }
+
+
+.review-list {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 10px;
+}
+
+.review-card {
+    flex: 0 0 calc(33.333% - 20px);
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    scroll-snap-align: start;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.review-content {
+    margin-bottom: 10px;
+}
+
+.review-rating .fa-star {
+    color: #ffd700;
+    font-size: 16px;
+}
+
+.checked {
+    color: #ffd700;
+}
+
+.review-image {
+    width: 100%;
+    max-width: 200px;
+    margin-top: 10px;
+    border-radius: 20px;
+}
+
+
+
+/* Footer */
+footer {
+    background: transparent;
+    color: rebeccapurple;
+    padding: 20px;
+    text-align: center;
+}
+
+.container-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    border-radius: 20px;
+    overflow: hidden;
+    /* Added border color */
+}
+
+
+.login-form {
+    display: flex;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    overflow: hidden; /* Ensures the border radius applies to both sections */
+}
+
+.image-section {
+    flex: 1;
+    background-color: #000;
+    border-radius: 20px 0 0 20px; /* Apply border radius to the left side */
+}
+
+    .image-section img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 20px 0 0 20px; /* Ensure the image conforms to the border radius */
+    }
+
+.form-section {
+    flex: 1;
+    background-color: #fff;
+    padding: 40px;
+    box-sizing: border-box;
+    border-radius: 0 20px 20px 0; /* Apply border radius to the right side */
+}
+
+    .form-section h2 {
+        margin-bottom: 20px;
+        font-size: 24px;
+        font-weight: 600;
+    }
+
+    .form-section label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 600;
+    }
+
+    .form-section input[type="text"],
+    .form-section input[type="email"],
+    .form-section input[type="password"],
+    .form-section input[type="file"] {
+        width: 100%;
+        padding: 5px 10px; /* Reduced padding for smaller height */
+        margin-bottom: 15px; /* Adjusted margin for better spacing */
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 14px; /* Adjusted font size for smaller input fields */
+    }
+
+    .form-section input[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        background-color: #b200ff;
+        border: none;
+        border-radius: 5px;
+        color: #fff;
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 16px; /* Adjusted font size for the submit button */
+    }
+
+        .form-section input[type="submit"]:hover {
+            background-color: mediumpurple;
+        }
+
+    .form-section .form-links {
+        margin-top: 20px;
+    }
+
+        .form-section .form-links a {
+            display: block;
+            margin-top: 10px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+            .form-section .form-links a:hover {
+                text-decoration: underline;
+            }
+
+    /* Profile picture input styling */
+    .form-section .profile-picture-upload {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+        .form-section .profile-picture-upload label {
+            cursor: pointer;
+            color: #007bff;
+            text-decoration: underline;
+            font-size: 14px; /* Adjusted font size for label */
+        }
+
+        .form-section .profile-picture-upload input[type="file"] {
+            display: none; /* Hide the default file input */
+        }
+
+    .form-section .profile-picture-preview {
+        margin-top: 10px;
+        width: 100px; /* Adjusted width for preview image */
+        height: 100px; /* Adjusted height for preview image */
+        border-radius: 50%;
+        border: 1px solid #ddd;
+        object-fit: cover;
+    }
+.container1 {
+    display: flex;
+    min-height: 100vh;
+    background: #f8f9fa;
+    font-family: 'Arial', sans-serif;
+}
+
+.sidebar {
+    width: 250px;
+    background: radial-gradient(circle, rgba(237, 241, 147, 0.6) 0%, rgba(233, 208, 242, 0.99) 100%);
+    padding: 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    margin: 20px;
+}
+
+    .sidebar h3 {
+        text-align: center;
+        color: #343a40;
+        margin-bottom: 20px;
+        font-size: 24px;
+    }
+
+    .sidebar ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+        .sidebar ul li {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+            .sidebar ul li a {
+                color: #343a40;
+                text-decoration: none;
+                font-size: 18px;
+                display: flex;
+                align-items: center;
+            }
+
+                .sidebar ul li a:hover {
+                    text-decoration: underline;
+                }
+
+                .sidebar ul li a i {
+                    margin-right: 10px;
+                    font-size: 20px;
+                    color: #6c757d;
+                }
+
+.content1 {
+    flex-grow: 1;
+    padding: 40px;
+    background: #ffffff;
+    margin: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+    .content1 h2 {
+        text-align: center;
+        color: #343a40;
+        margin-bottom: 40px;
+        font-size: 32px;
+    }
+
+.content-section {
+    display: none;
+}
+
+    .content-section.active {
+        display: block;
+    }
+
+    .content-section h3 {
+        color: #495057;
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    .content-section p {
+        color: #6c757d;
+        font-size: 18px;
+        line-height: 1.6;
+    }
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.btn1 {
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.btn-create {
+    background-color: green;
+    color: white;
+    border: none;
+}
+
+.btn-update {
+    background-color: orange;
+    color: white;
+    border: none;
+}
+
+.btn-delete {
+    background-color: red;
+    color: white;
+    border: none;
+}
+

@@ -1,0 +1,329 @@
+﻿@model eventia_database.Models.IndexVM
+
+@{
+    ViewBag.Title = "AdminsPanel";
+}
+
+<div class="container container1">
+    <div class="sidebar">
+        <h3>Tables</h3>
+        <ul>
+            <li><a href="#section1" class="menu-link"><i class="fas fa-user"></i> Users</a></li>
+            <li><a href="#section2" class="menu-link"><i class="fas fa-table"></i> Events</a></li>
+            <li><a href="#section3" class="menu-link"><i class="fas fa-table"></i> Attendances</a></li>
+            <li><a href="#section4" class="menu-link"><i class="fas fa-table"></i> Reviews</a></li>
+            <li><a href="#section5" class="menu-link"><i class="fas fa-table"></i> Categories</a></li>
+        </ul>
+    </div>
+
+    <div class="content content1">
+        <h2>Admin's Panel</h2>
+
+        <!-- Users Section -->
+        <div id="section1" class="content-section active">
+            <h3>Users</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Password</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model.users)
+                    {
+                        <tr>
+                            <td>@user.UserID</td>
+                            <td>@user.UserName</td>
+                            <td>@user.Mail</td>
+                            <td>@user.Password</td>
+                            <td>
+                                <button class="btn btn1 btn-update" onclick="showUpdatePopup('@user.UserID', '@user.UserName', '@user.Mail', '@user.Password')">Update</button>
+                                @using (Html.BeginForm("DeleteUser", "Home", FormMethod.Post))
+                                {
+                                    @Html.Hidden("id", user.UserID)
+                                    <button type="submit" class="btn btn1 btn-delete">Delete</button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Events Section -->
+        <div id="section2" class="content-section">
+            <h3>Events</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Event ID</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Details</th>
+                        <th>Location</th>
+                        <th>Date/Time</th>
+                        <th>Requirements</th>
+                        <th>Contact</th>
+                        <th>Image Url</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var evt in Model.events)
+                    {
+                        <tr>
+                            <td>@evt.EventID</td>
+                            <td>@evt.EventTitle</td>
+                            <td>@evt.Category.CategoryName</td>
+                            <td>@evt.EventDetail</td>
+                            <td>@evt.Location</td>
+                            <td>@evt.EventDate.ToString("g") @evt.EventTime</td>
+                            <td>@evt.ParticipationRequirements</td>
+                            <td>@evt.ContactInfo</td>
+                            <td>@evt.EventImageUrl</td>
+                            <td>
+                                <button class="btn btn1 btn-update" onclick="showUpdatePopup('@evt.EventID', '@evt.EventTitle', '@evt.Category.CategoryName', '@evt.EventDetail', '@evt.Location', '@evt.EventDate.ToString("g")', '@evt.EventTime', '@evt.ParticipationRequirements', '@evt.ContactInfo', '@evt.EventImageUrl')">Update</button>
+                                @using (Html.BeginForm("DeleteEvent", "Home", FormMethod.Post))
+                                {
+                                    @Html.Hidden("id", evt.EventID)
+                                    <button type="submit" class="btn btn1 btn-delete">Delete</button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+
+        <!-- Attendances Section -->
+        <div id="section3" class="content-section">
+            <h3>Attendances</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>UserID</th>
+                        <th>Event</th>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Location</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var attendance in Model.Attendances)
+                    {
+                        <tr>
+                            <td>@attendance.AttendanceID</td>
+                            <td>@attendance.UserID</td>
+                            <td>@attendance.Event.EventTitle</td>
+                            <td>@attendance.name</td>
+                            <td>@attendance.surname</td>
+                            <td>@attendance.age</td>
+                            <td>@attendance.gender</td>
+                            <td>@attendance.location</td>
+                            <td>@attendance.phone_number</td>
+                            <td>@attendance.email</td>
+                            <td>
+                                <button class="btn btn1 btn-update" onclick="showUpdatePopup('@attendance.AttendanceID', '@attendance.UserID', '@attendance.Event.EventTitle', '@attendance.name', '@attendance.surname', '@attendance.age', '@attendance.gender', '@attendance.location', '@attendance.phone_number', '@attendance.email')">Update</button>
+                                @using (Html.BeginForm("DeleteAttendance", "Home", FormMethod.Post))
+                                {
+                                    @Html.Hidden("id", attendance.AttendanceID)
+                                    <button type="submit" class="btn btn1 btn-delete">Delete</button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Reviews Section -->
+        <div id="section4" class="content-section">
+            <h3>Reviews</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>UserID</th>
+                        <th>Event</th>
+                        <th>Comment</th>
+                        <th>Rating</th>
+                        <th>Image URL</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var review in Model.reviews)
+                    {
+                        <tr>
+                            <td>@review.ReviewID</td>
+                            <td>@review.UserID</td>
+                            <td>@review.Event.EventTitle</td>
+                            <td>@review.Comment</td>
+                            <td>@review.Rating</td>
+                            <td>@review.ReviewImage</td>
+                            <td>
+                                <button class="btn btn1 btn-update" onclick="showUpdatePopup('@review.ReviewID', '@review.UserID', '@review.Event.EventTitle', '@review.Comment', '@review.Rating', '@review.ReviewImage')">Update</button>
+                                @using (Html.BeginForm("DeleteReview", "Home", FormMethod.Post))
+                                {
+                                    @Html.Hidden("id", review.ReviewID)
+                                    <button type="submit" class="btn btn1 btn-delete">Delete</button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Categories Section -->
+        <div id="section5" class="content-section">
+            <h3>Categories</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Category Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var category in Model.Categories)
+                    {
+                        <tr>
+                            <td>@category.CategoryID</td>
+                            <td>@category.CategoryName</td>
+                            <td>
+                                <button class="btn btn1 btn-update" onclick="showUpdatePopup('@category.CategoryID', '@category.CategoryName')">Update</button>
+                                @using (Html.BeginForm("DeleteCategory", "Home", FormMethod.Post))
+                                {
+                                    @Html.Hidden("id", category.CategoryID)
+                                    <button type="submit" class="btn btn1 btn-delete">Delete</button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- Update Popup -->
+<div id="updatePopup" class="popup">
+    <div class="popup-content">
+        <span class="close" onclick="closeUpdatePopup()">&times;</span>
+        <h3>Update</h3>
+        @using (Html.BeginForm("AdminsPanel", "Home", FormMethod.Post, new { id = "updateForm" }))
+        {
+            @Html.Hidden("ID", "", new { id = "updateID" })
+            <div id="formFields">
+                <!-- Dinamik olarak alanlar eklenecek -->
+            </div>
+            <button type="submit" class="btn btn1">Update</button>
+        }
+    </div>
+</div>
+
+<style>
+    .popup {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        padding-top: 100px;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0,0,0);
+        background-color: rgba(0,0,0,0.4);
+    }
+
+    .popup-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+</style>
+
+<script>
+    document.querySelectorAll('.menu-link').forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            // Remove active class from all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Add active class to the clicked section
+            const targetSection = document.querySelector(this.getAttribute('href'));
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+        });
+    });
+    function showUpdatePopup(id, ...fields) {
+        document.getElementById('updateID').value = id;
+
+        let formFields = document.getElementById('formFields');
+        formFields.innerHTML = '';
+
+        fields.forEach((field, index) => {
+            let label = document.createElement('label');
+            let input = document.createElement('input');
+
+            label.innerHTML = `Field ${index + 1}:`;
+            input.type = 'text';
+            input.name = `Field${index + 1}`;
+            input.value = field;
+            input.required = true;
+
+            formFields.appendChild(label);
+            formFields.appendChild(input);
+            formFields.appendChild(document.createElement('br'));
+        });
+
+        document.getElementById('updatePopup').style.display = 'block';
+    }
+
+    function closeUpdatePopup() {
+        document.getElementById('updatePopup').style.display = 'none';
+    }
+
+    // Popup'ı kapatmak için pencere dışına tıklamayı kontrol edin
+    window.onclick = function (event) {
+        if (event.target == document.getElementById('updatePopup')) {
+            document.getElementById('updatePopup').style.display = 'none';
+        }
+    }
+</script>

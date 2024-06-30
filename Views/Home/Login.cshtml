@@ -1,0 +1,31 @@
+﻿@model eventia_database.Models.Users
+
+<main aria-labelledby="title">
+    <div class="container container-login">
+        <div class="login-form">
+            <div class="image-section">
+                <img src="@Url.Content("https://freestockfootagearchive.com/wp-content/uploads/2021/02/Psychedelic-Light-Overlay-Loop-Purple-Dream-Free-Download.jpeg")" alt="Hero Image" class="img-fluid">
+            </div>
+            <div class="form-section">
+                <h2>Sign In</h2>
+                @using (Html.BeginForm())
+                {
+                    <label for="email">EMAIL</label>
+                    @Html.TextBoxFor(model => model.Mail, new { id = "email", title = "Email", required = "required" })
+
+                    <label for="password">PASSWORD</label>
+                    @Html.PasswordFor(model => model.Password, new { id = "password", title = "Password", required = "required" })
+
+                    <div class="checkbox">
+                        <input type="checkbox" value="TRUE" title="Keep me Signed in" /> Remember Me
+                    </div>
+                    <input type="submit" value="Sign In" />
+                    <div class="form-links">
+                        <a href="#" title="Forgot Password">Forgot Password?</a>
+                        @Html.ActionLink("Not a member yet? Sign Up Here!", "Register", "Home", new { area = "" }, new { @class = "nav-link" })
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</main>

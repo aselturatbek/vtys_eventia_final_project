@@ -1,0 +1,345 @@
+﻿@model eventia_database.Models.IndexVM
+
+<main>
+    <!-- Giriş Fotoğrafı ve Etkinlik Arama Çubuğu -->
+    <section class="hero">
+        <img src="@Url.Content("https://freestockfootagearchive.com/wp-content/uploads/2021/02/Psychedelic-Light-Overlay-Loop-Purple-Dream-Free-Download.jpeg")" alt="Hero Image" class="img-fluid">
+
+        <div class="search-bar">
+            <h1>The Citywide Music Festival</h1>
+            <p>The Citywide Music Festival is a celebration of art and culture that brings together musicians, and art enthusiasts from across the region.</p>
+            <input type="text" placeholder="Search by name or type" class="search-input">
+            <div class="filter-form">
+                <form class="form-inline justify-content-center">
+                    <select class="form-control">
+                        <option>Date</option>
+                        <!-- Other options -->
+                    </select>
+                    <select class="form-control">
+                        <option>Location</option>
+                        <!-- Other options -->
+                    </select>
+                    <select class="form-control">
+                        <option>Type event</option>
+                        <!-- Other options -->
+                    </select>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="events">
+        <div class="event-cards-wrapper">
+            <button class="carousel-control prev" onclick="prevSlide()">&#10094;</button>
+            <div class="event-cards">
+              
+                    @foreach (var eventItem in Model.events)
+                    {
+                        <div class="event-card">
+                            <img src="@eventItem.EventImageUrl" alt="Event Image" class="event-img">
+                            <div class="event-info">
+                                <h3>@eventItem.EventTitle</h3>
+                                <p>Date: @eventItem.EventDate.ToShortDateString()</p>
+                                <p>Location: @eventItem.Location</p>
+                                <button class="btn btn-custom" onclick="showEventDetails('@eventItem?.EventImageUrl', '@eventItem.EventTitle', '@eventItem.EventDate.ToShortDateString()', '@eventItem.Location', '@eventItem.Category.CategoryName', '@eventItem.EventDetail', '@eventItem.ParticipationRequirements', '@eventItem.ContactInfo')">More Info</button>
+                            </div>
+                        </div>
+                    }
+                
+               
+            </div>
+            <button class="carousel-control next" onclick="nextSlide()">&#10095;</button>
+        </div>
+        <hr />
+        <button class="btn btn-add-event" onclick="showAddEventForm()">Add Your Event Here</button>
+    </section>
+
+
+
+    <!-- Event Details Modal -->
+    <div id="eventDetailsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeEventDetails()">&times;</span>
+            <img id="modalEventImage" alt="Event Image" class="modal-event-img">
+            <h2 id="modalEventTitle"></h2>
+            <p><strong>Date:</strong> <span id="modalEventDate"></span></p>
+            <p><strong>Location:</strong> <span id="modalEventLocation"></span></p>
+            <p><strong>Category:</strong> <span id="modalEventCategory"></span></p>
+            <p><strong>Details:</strong> <span id="modalEventDetail"></span></p>
+            <hr>
+            <h3>Participation Details:</h3>
+            <p id="modalParticipationDetails"></p>
+            <hr>
+            <h3>Contact Information:</h3>
+            <p>For more information, get contact with us at <a href="mailto:info@eventia.com">info@eventia.com</a></p>
+            <p>Phone Number: <span id="modalContactInfo"></span></p>
+            <hr>
+            <button class="btn btn-custom" onclick="openJoinForm()">Join Now</button>
+        </div>
+    </div>
+
+    <!-- Etkinlik Ekleme Formu -->
+    <div id="addEventForm" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAddEventForm()">&times;</span>
+            <h2>Add Event</h2>
+            @using (Html.BeginForm())
+            {
+                <label for="eventName">Event Title:</label>
+                @Html.TextBoxFor(model => model.Event.EventTitle, new { @class = "form-control", required = "required" })
+
+                <label for="category">Category:</label>
+                @Html.DropDownListFor(
+                    model => model.Event.CategoryID,
+                    new SelectList(Model.Categories, "CategoryID", "CategoryName"),
+                    "Select Category",
+                    new { @class = "form-control", required = "required" }
+                )<br><br>
+
+                <label for="detail">Details:</label><br>
+                @Html.TextAreaFor(model => model.Event.EventDetail, new { @class = "form-control", rows = "6" })
+                @Html.ValidationMessageFor(model => model.Event.EventDetail)<br><br>
+
+                <label for="location">Location:</label>
+                @Html.TextBoxFor(model => model.Event.Location, new { @class = "form-control", required = "required" })<br><br>
+                <label for="participationrequirements">Participation Requirements:</label>
+                @Html.TextBoxFor(model => model.Event.ParticipationRequirements, new { @class = "form-control", required = "required" })<br><br>
+                <label for="contact">Contact Information:</label>
+                @Html.TextBoxFor(model => model.Event.ContactInfo, new { @class = "form-control", required = "required" })<br><br>
+                <label for="date">Date:</label>
+                @Html.TextBoxFor(model => model.Event.EventDate, new { @class = "form-control", type = "date", required = "required" })<br /><br />
+                @Html.ValidationMessageFor(model => model.Event.EventDate)
+
+                <label for="time">Time:</label>
+                @Html.TextBoxFor(model => model.Event.EventTime, new { @class = "form-control", type = "time", required = "required" })
+                @Html.ValidationMessageFor(model => model.Event.EventTime)<br><br>
+
+                <label for="eventImageUrl">Event Image URL:</label>
+                @Html.TextBoxFor(model => model.Event.EventImageUrl, new { @class = "form-control", required = "required" })
+                @Html.ValidationMessageFor(model => model.Event.EventImageUrl)<br><br>
+
+                <button type="submit" class="btn btn-custom">Add Event</button>
+            }
+        </div>
+    </div>
+
+    <!-- Join Form Modal -->
+    <div id="joinFormModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeJoinForm()">&times;</span>
+            <h2>Join the Event</h2>
+            <form id="joinForm" action="@Url.Action("JoinEvent", "Home")" method="post" enctype="multipart/form-data">
+                @Html.AntiForgeryToken()
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="surname">Surname:</label>
+                <input type="text" id="surname" name="surname" required>
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" required>
+                <div class="gender-checkboxes">
+                    <label><input type="checkbox" id="maleCheckbox" name="gender" value="male">Male</label>
+                    <label><input type="checkbox" id="femaleCheckbox" name="gender" value="female">Female</label>
+                    <label><input type="checkbox" id="nbCheckbox" name="gender" value="nonbinary">Non Binary</label>
+                </div>
+                <label for="location">Location:</label>
+                <input type="text" id="location" name="location" required>
+
+                <label for="phone">Phone Number:</label>
+                <input type="text" id="phone" name="phone" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="event">Select Event:</label>
+                <select id="event" name="event">
+                    @foreach (var eventItem in Model.events)
+                    {
+                        <option value="@eventItem.EventID">@eventItem.EventTitle</option>
+                    }
+                    <!-- Add more events as needed -->
+                </select>
+                <button type="submit" class="btn btn-custom">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <section class="review">
+        <h2>Reviews</h2>
+        <div class="review-form">
+            <form id="reviewForm" action="@Url.Action("AddReview", "Home")" method="post" enctype="multipart/form-data">
+                @Html.AntiForgeryToken()
+
+                <div class="user-info">
+                    <img src="https://st3.depositphotos.com/6672868/14508/v/450/depositphotos_145085237-stock-illustration-user-profile-group.jpg" alt="User" class="user-avatar">
+                    <h4>@ViewBag.Username</h4>
+                </div>
+
+                <label for="eventSelect">Select Event:</label>
+                <select id="eventSelect" name="eventSelect" class="form-control">
+                    @foreach (var eventItem in Model.events)
+                    {
+                        <option value="@eventItem.EventID">@eventItem.EventTitle</option>
+                    }
+                </select><br><br>
+
+                <textarea id="reviewText" name="reviewText" placeholder="Your Review" class="form-control" required></textarea><br>
+
+                <input type="file" accept="image/*" id="userPhotoInput" name="reviewImage" onchange="previewPhoto(event)" class="form-control-file"><br>
+
+                <div class="rating">
+                    <input type="radio" id="star5" name="rating" value="5"><label for="star5"><i class="fas fa-star"></i></label>
+                    <input type="radio" id="star4" name="rating" value="4"><label for="star4"><i class="fas fa-star"></i></label>
+                    <input type="radio" id="star3" name="rating" value="3"><label for="star3"><i class="fas fa-star"></i></label>
+                    <input type="radio" id="star2" name="rating" value="2"><label for="star2"><i class="fas fa-star"></i></label>
+                    <input type="radio" id="star1" name="rating" value="1"><label for="star1"><i class="fas fa-star"></i></label>
+                </div><br>
+
+                <button type="submit" class="btn btn-custom">Submit Review</button>
+            </form>
+        </div>
+    </section>
+   
+    <section>
+        <div class="review-list">
+            @if (Model.reviews != null && Model.reviews.Any())
+            {
+                foreach (var review in Model.reviews)
+                {
+                    if (review != null)
+                    {
+                        <div class="review-card">
+                            @if (review.User != null)
+                            {
+                                <div class="user-info">
+                                    @if (review.User.UserImage != null)
+                                    {
+                                        <img src="data:image/jpeg;base64,@Convert.ToBase64String(review.User.UserImage)" class="user-avatar" alt="User Avatar">
+                                    }
+                                    else
+                                    {
+                                        <img src="default-avatar.jpg" class="user-avatar" alt="Default Avatar">
+                                    }
+                                    <h6>@review.User.UserName</h6>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="user-info">
+                                    <img src="default-avatar.jpg" class="user-avatar" alt="Default Avatar">
+                                    <h6>Anonymous</h6>
+                                </div>
+                            }
+
+                            @if (review.Event != null)
+                            {
+                                <h5>@review.Event.EventTitle</h5>
+                            }
+                            else
+                            {
+                                <h5>Unknown Event</h5>
+                            }
+
+                            <div class="review-content">
+                                <p>@review.Comment</p>
+                                <div class="review-rating">
+                                    @for (int i = 1; i <= 5; i++)
+                                    {
+                                        <span class="fa fa-star @((i <= review.Rating) ? "checked" : "")"></span>
+                                    }
+                                </div>
+                                @if (review.ReviewImage != null)
+                                {
+                                    <img src="data:image/jpeg;base64,@Convert.ToBase64String(review.ReviewImage)" class="review-image" alt="Review Image">
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+            }
+            else
+            {
+                <p>No reviews available.</p>
+            }
+        </div>
+    </section>
+
+
+
+</main>
+
+@section Scripts {
+    <script>
+        function showEventDetails(imageUrl, title, date, location, category, detail, participationDetails, contactInfo) {
+            // Modal içeriğini doldur
+            document.getElementById('modalEventImage').src = imageUrl;
+            document.getElementById('modalEventTitle').innerText = title;
+            document.getElementById('modalEventDate').innerText = date;
+            document.getElementById('modalEventLocation').innerText = location;
+            document.getElementById('modalEventCategory').innerText = category;
+            document.getElementById('modalEventDetail').innerText = detail;
+            document.getElementById('modalParticipationDetails').innerText = participationDetails;
+            document.getElementById('modalContactInfo').innerText = contactInfo;
+
+            // Modali göster
+            document.getElementById('eventDetailsModal').style.display = 'block';
+        }
+
+        function closeEventDetails() {
+            document.getElementById('eventDetailsModal').style.display = 'none';
+        }
+
+        function showAddEventForm() {
+            document.getElementById('addEventForm').style.display = 'block';
+        }
+
+        function closeAddEventForm() {
+            document.getElementById('addEventForm').style.display = 'none';
+        }
+
+        function openJoinForm() {
+            document.getElementById('joinFormModal').style.display = 'block';
+        }
+
+        function closeJoinForm() {
+            document.getElementById('joinFormModal').style.display = 'none';
+        }
+        function previewPhoto(event) {
+            var input = event.target;
+            var reader = new FileReader();
+            reader.onload = function () {
+                var imgElement = document.createElement('img');
+                imgElement.src = reader.result;
+                imgElement.style.maxWidth = '200px'; // Önizleme için boyut sınırlaması
+                document.getElementById('preview').innerHTML = '';
+                document.getElementById('preview').appendChild(imgElement);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+        let currentSlide = 0;
+
+        function showSlides(n) {
+            const slides = document.querySelectorAll('.event-card');
+            const totalSlides = slides.length;
+            const slideWidth = slides[0].clientWidth + 20; // Adjust according to your margin/padding
+
+            if (n >= totalSlides / 3) {
+                currentSlide = 0;
+            } else if (n < 0) {
+                currentSlide = Math.floor(totalSlides / 3) - 1;
+            } else {
+                currentSlide = n;
+            }
+
+            document.querySelector('.event-cards').style.transform = `translateX(${-slideWidth * currentSlide * 3}px)`;
+        }
+
+        function nextSlide() {
+            showSlides(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            showSlides(currentSlide - 1);
+        }
+
+    </script>
+}
